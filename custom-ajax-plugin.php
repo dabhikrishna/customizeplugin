@@ -20,7 +20,7 @@ function custom_ajax_plugin_settings_page() {
 	<div class="wrap">
 		<h2>Custom AJAX Plugin Settings</h2>
 		<form id="store-name-form">
-		<?php wp_nonce_field( 'update_plugin_options', 'plugin_options_nonce' ); ?>
+		<?php wp_nonce_field( 'save_store_name_action', 'save_store_name_nonce' ); ?>
 			<label for="store-name">Store Name:</label>
 			<input type="text" id="store-name" name="store_name" value="<?php echo esc_attr( get_option( 'store_name' ) ); ?>">
 			<input type="submit" value="Save">
@@ -35,7 +35,7 @@ add_action( 'admin_menu', 'custom_ajax_plugin_menu' );
 // Step 3: Implement AJAX for Dynamic Content
 
 function custom_ajax_plugin_ajax_handler() {
-	if ( isset( $_POST['plugin_options_nonce'] ) && wp_verify_nonce( $_POST['plugin_options_nonce'], 'update_plugin_options' ) ) {
+	if ( isset( $_POST['store_name'] ) ) {
 		$store_name = sanitize_text_field( $_POST['store_name'] );
 		update_option( 'store_name', $store_name );
 		echo 'Store name updated successfully!';
